@@ -19,14 +19,22 @@ def main():
         key = book_details.pop(0)
         information_to_book[key] =book_details
         books_loaded +=1
+    print(information_to_book)
     print("{} books loaded from {}".format(books_loaded,file_location))
 
+    menu_choice= menu()
+    while menu_choice != "q":
+        if menu_choice == "l":
+
+
+
+def menu():
     valid_menu_choice=["l","a","m","q"]
     menu_choice=input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>").lower()
     while not menu_choice in valid_menu_choice:
         print("invalid menu choice")
         menu_choice=input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit").lower()
-
+    return menu_choice
 
 
 if __name__ == '__main__':
