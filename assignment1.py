@@ -21,22 +21,21 @@ def main():
         books_loaded +=1
     print("{} books loaded from {}".format(books_loaded,file_location))
 
-    menu_choice= menu()
+
+    menu_choice = input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>").lower()
     while menu_choice != "q":
         if menu_choice == "l":
             if list_book_details(information_to_book):
                 print('No more books left to read. Why not add a new book?')
-            menu_choice= menu()
+            menu_choice = input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>").lower()
+
+
+        else:
+            print("invalid input")
+            menu_choice = input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>").lower()
 
 
 
-def menu():
-    valid_menu_choice=["l","a","m","q"]
-    menu_choice=input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>").lower()
-    while not menu_choice in valid_menu_choice:
-        print("invalid menu choice")
-        menu_choice=input("Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit").lower()
-    return menu_choice
 
 def list_book_details(book_to_information):
     book_names = book_to_information.keys()
