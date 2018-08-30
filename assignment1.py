@@ -1,32 +1,39 @@
 """
-Replace the contents of this module docstring with your own details
 Name: Steven Howlett
 Date started:26/08/2018
-GitHub URL:
+GitHub URL: personal https://github.com/StevenHowlett/assessment ,
+            class https://github.com/CP1404-2018-2/a1-StevenHowlett/tree/master
+            (2 copys because of committing mistake ,personal has more commits)
+
+Program reads books and their information from a csv file, allows user to view a list of books,
+mark books as completed and add new books. the program then rewrites the csv file with an updated list of books.
 """
-FILE_LOCATION = "temp.csv"
+FILE_LOCATION = "books.csv"
 MENU = "Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>"
+
+"""main calls other functions and loops the program while the user has not entered q """
 
 
 def main():
-    print("Reading Tracker 1.0 - by Steven Howlett")
+    print("Reading Tracker - by Steven Howlett")
 
     book_to_information = load_books_from_file()
 
     menu_choice = input(MENU).lower()
     while menu_choice != "q":
-        if menu_choice == "l":
-            if list_book_details(book_to_information):
+        while menu_choice == "l":
+            list_book_details(book_to_information)
+            if not does_contain_required_book(book_to_information):
                 print('No more books left to read. Why not add a new book?')
             menu_choice = input(MENU).lower()
-        if menu_choice == "m":
+        while menu_choice == "m":
             if not does_contain_required_book(book_to_information):
                 print("There are no required books")
             else:
                 list_book_details(book_to_information)
                 book_to_information = mark_book_as_complete(book_to_information)
             menu_choice = input(MENU).lower()
-        if menu_choice == "a":
+        while menu_choice == "a":
             add_new_book(book_to_information)
             menu_choice = input(MENU).lower()
         else:
@@ -37,6 +44,9 @@ def main():
     save_books_to_file(book_to_information)
 
 
+"""overwrites the file with keys and values from book_to_information"""
+
+
 def save_books_to_file(book_to_information):
     output_file = open(FILE_LOCATION, "w")
     for book in book_to_information.keys():
@@ -44,6 +54,9 @@ def save_books_to_file(book_to_information):
         print("{},{},{},{}".format(book, book_information[0], book_information[1], book_information[2]),
               file=output_file)
     print("{} books saved today\n have a nice day :)".format(len(book_to_information.keys())))
+
+
+"""gets input from the user and adds a book to book_to_information"""
 
 
 def add_new_book(book_to_information):
@@ -70,6 +83,9 @@ def add_new_book(book_to_information):
     print(book_to_information)
 
 
+"""error checks for text inputs in add_new_book"""
+
+
 def error_check_text(user_text):
     is_valid = False
     if user_text == ' ' or '':
@@ -77,6 +93,9 @@ def error_check_text(user_text):
     else:
         is_valid = True
     return is_valid
+
+
+"""finds a book from the user input and changes it from required to completed"""
 
 
 def mark_book_as_complete(book_to_information):
@@ -103,6 +122,9 @@ def mark_book_as_complete(book_to_information):
     return book_to_information
 
 
+"""check if there are any books that are required"""
+
+
 def does_contain_required_book(book_to_information):
     for book in book_to_information.keys():
         book_information = book_to_information[book]
@@ -110,6 +132,9 @@ def does_contain_required_book(book_to_information):
         if book_information[2] == 'r':
             return True
     return False
+
+
+"""reads from csv file and stores information in book_to_information"""
 
 
 def load_books_from_file():
@@ -125,6 +150,9 @@ def load_books_from_file():
     print("{} books loaded from {}".format(books_loaded, FILE_LOCATION))
     input_file.close()
     return information_to_book
+
+
+"""displays a list of books and their; authors ,pages and if they are required or completed. also displays number of required books and the sum of pages for those books"""
 
 
 def list_book_details(book_to_information):
@@ -147,8 +175,6 @@ def list_book_details(book_to_information):
             largest_book_name_length = len(book)
     total_unread_pages = 0
     total_unread_books = 0
-    if len(book_completes) == 0:
-        return True
     for i in range(0, len(book_names)):
         book_complete = " "
         if book_completes[i] == 'r':
