@@ -33,7 +33,18 @@ def main():
             print("invalid input")
             menu_choice = input(
                 "Menu:\nL = List all books\nA = Add new book\nM = Mark a new book as completed\nQ = Quit\n>>>").lower()
-    
+
+    save_books_to_file(book_to_information)
+
+
+def save_books_to_file(book_to_information):
+    output_file = open(FILE_LOCATION, "w")
+    for book in book_to_information.keys():
+        book_information = book_to_information[book]
+        print("{},{},{},{}".format(book, book_information[0], book_information[1], book_information[2]),
+              file=output_file)
+    print("{} books saved today\n have a nice day :)".format(len(book_to_information.keys())))
+
 
 def add_new_book(book_to_information):
     is_valid = False
@@ -112,6 +123,7 @@ def load_books_from_file():
         information_to_book[book_name] = book_details
         books_loaded += 1
     print("{} books loaded from {}".format(books_loaded, FILE_LOCATION))
+    input_file.close()
     return information_to_book
 
 
